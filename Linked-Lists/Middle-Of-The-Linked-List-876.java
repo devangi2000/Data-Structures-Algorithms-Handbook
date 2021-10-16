@@ -29,34 +29,17 @@
  * };
  */
 
-// METHOD 1 USING FAST AND SLOW POINTERS
+// METHOD 1
 
 class Solution {
-public:
-    ListNode* middleNode(ListNode* head) {
-        ListNode *fast = head, *slow = head;
-        while(fast and fast->next){
-            slow = slow->next;
-            fast = fast->next->next;
+    public ListNode middleNode(ListNode head) {
+        if(head == null || head.next == null)
+            return head;
+        ListNode slow = head, fast = head;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
         }
         return slow;
     }
-};
-
-// METHOD 2:
-
-class Solution {
-public:
-    ListNode* middleNode(ListNode* head) {
-        ListNode *curr = head;
-        int c = 0;
-        while(curr){
-            curr = curr->next;
-            c++;
-        }
-        c = ceil(c/2);
-        while(c--)
-            head = head->next;
-        return head;
-    }
-};
+}
