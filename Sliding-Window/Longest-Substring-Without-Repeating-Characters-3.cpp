@@ -29,18 +29,17 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        if(s.size() <= 1) return s.size();
-        int left = 0, right = 0, ans = 0;
+        int maxi = 0, left = 0, right = 0, n = s.size();
+        if(n <= 1) return n;
         unordered_map<char, int> m;
-        while(right < s.size()){
+        while(right < n){
             m[s[right]]++;
             while(m[s[right]] > 1){
-                m[s[left]]--;
-                left++;
+                m[s[left++]]--;
             }
-            ans = max(ans, right-left+1);
+            maxi = max(maxi, right - left + 1);
             right++;
-        }
-        return ans;
+        }        
+        return maxi;
     }
 };

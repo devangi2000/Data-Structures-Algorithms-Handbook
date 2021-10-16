@@ -19,11 +19,34 @@
 // Constraints:
 // 0 ≤ N ≤ 1018
 
+// Method 1
 class Solution{
     public:
     // Function to check if given number n is a power of two.
     bool isPowerofTwo(long long n){
         if(n == 0) return false;
         return !(n & (n-1));
+    }
+};
+
+// Method 2
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        if(n==0) return false;
+        return ((ceil(log2(n)))==floor(log2(n)));
+    }
+};
+
+// Method 3
+
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        if(n<=0) return false;
+        while(n%2 == 0){
+            n/=2;
+        }
+        return n==1;
     }
 };
