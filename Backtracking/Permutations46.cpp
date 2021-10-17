@@ -23,30 +23,31 @@
 
 class Solution {
 public:
-    void backtrack(vector<vector<int>> &ans, vector<int> temp, vector<int> &nums, unordered_map<int, int> &m){
+    unordered_map<int, int> m;
+    vector<vector<int>> ans;
+    
+    void backtrack(vector<int> &nums, vector<int> &temp){
         if(temp.size() == nums.size()){
             ans.push_back(temp);
             return;
         }
-        for(int i = 0; i < nums.size(); ++i){
+        for(int i = 0; i < nums.size(); i++){
             if(m[nums[i]] != 0) continue;
             temp.push_back(nums[i]);
             m[nums[i]]++;
-            backtrack(ans, temp, nums, m);
-            temp.pop_back();
+            backtrack(nums, temp);
             m[nums[i]]--;
+            temp.pop_back();
         }
+        return;
     }
     
     vector<vector<int>> permute(vector<int>& nums) {
-        vector<vector<int>> ans;
         vector<int> temp;
-        unordered_map<int, int> m;
-        backtrack(ans, temp, nums, m);
+        backtrack(nums, temp);
         return ans;
     }
 };
-
 
 // Optimized Approach
 // MUCH faster
