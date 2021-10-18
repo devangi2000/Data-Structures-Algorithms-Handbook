@@ -15,7 +15,34 @@
 
 // 1 <= s1.length, s2.length <= 104
 // s1 and s2 consist of lowercase English letters.
+// Method 1
 
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        int p = s1.size(), n = s2.size();
+        if(p > n) return false;
+        vector<int> m1(26, 0);
+        for(char c : s1)
+            m1[c - 'a']++;
+        for(int i = 0; i <= n - p; i++){
+            vector<int> m2(26, 0);
+            for(int j = 0; j < p; j++){
+                m2[s2[i+j] - 'a']++;
+            }
+            if(matches(m1, m2)) return true;
+        }
+        return false;
+    }
+    
+    bool matches(vector<int> m1, vector<int> m2){
+        for(int i = 0; i < 26; i++)
+            if(m1[i] != m2[i]) return false;
+        return true;
+    }
+};
+
+// Method 2
 class Solution {
 public:
     bool checkInclusion(string s1, string s2) {
