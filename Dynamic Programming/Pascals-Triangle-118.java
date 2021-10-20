@@ -17,19 +17,18 @@
 // 1 <= numRows <= 30
 
 class Solution {
-public:
-    vector<vector<int>> generate(int numRows) {
-        vector<vector<int>> ans;
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> ans = new ArrayList<>();        
         for(int i = 0; i < numRows; i++){
-            vector<int> row;
+            List<Integer> row = new ArrayList<>();
             for(int j = 0; j <= i; j++){
-                if(j == 0 or j  == i)
-                    row.push_back(1);
-                else if(i > 0 and j > 0)
-                    row.push_back(ans[i-1][j-1] + ans[i-1][j]);
+                if(j == 0 || j == i)
+                    row.add(1);
+                else
+                    row.add(ans.get(i-1).get(j-1) + ans.get(i-1).get(j));                
             }
-            ans.push_back(row);
+            ans.add(row);
         }
         return ans;
     }
-};
+}

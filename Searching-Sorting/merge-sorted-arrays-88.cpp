@@ -33,12 +33,9 @@
 class Solution {
 public:
     void merge(vector<int>& nums1, int a, vector<int>& nums2, int b){
-        int p1 = a-1, p2 = b-1, i = a+b-1;
-        while(p2 >= 0){
-            if(p1 >= 0 && nums1[p1] > nums2[p2]){
-                nums1[i--] = nums1[p1--];
-            }
-            else nums1[i--] = nums2[p2--];
+        int i = a - 1, j = b - 1, k = a + b - 1;
+        while(j >= 0){
+            nums1[k--] = i >= 0 && nums1[i] > nums2[j] ? nums1[i--] : nums2[j--];
         }
     }
 };
