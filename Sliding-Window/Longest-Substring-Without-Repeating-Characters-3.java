@@ -27,36 +27,15 @@
 // s consists of English letters, digits, symbols and spaces.
 
 class Solution {
-public:
-    int lengthOfLongestSubstring(string s) {
-        int maxi = 0, left = 0, right = 0, n = s.size();
-        if(n <= 1) return n;
-        unordered_map<char, int> m;
-        while(right < n){
-            m[s[right]]++;
-            while(m[s[right]] > 1){
-                m[s[left++]]--;
-            }
-            maxi = max(maxi, right - left + 1);
-            right++;
-        }        
-        return maxi;
-    }
-};
-
-// Enhanced Sliding window
-
-class Solution {
-public:
-    int lengthOfLongestSubstring(string s) {
-        unordered_map<char, int> m;
-        int maxi = 0, n = s.size();
+    public int lengthOfLongestSubstring(String s) {
+        int n = s.length(), maxi = 0;
+        Map<Character, Integer> mp = new HashMap<>();
         for(int i = 0, j = 0; i < n; i++){
-            if(m.find(s[i]) != m.end())
-                j = max(j, 1 + m[s[i]]);
-            m[s[i]] = i;
-            maxi = max(maxi, i - j + 1);
+            if(mp.containsKey(s.charAt(i)))
+                j = Math.max(j, mp.get(s.charAt(i)) + 1);
+            mp.put(s.charAt(i), i);
+            maxi = Math.max(maxi, i - j + 1);
         }
         return maxi;
     }
-};
+}
