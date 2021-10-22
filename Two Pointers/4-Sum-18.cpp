@@ -24,31 +24,25 @@ class Solution {
 public:
     vector<vector<int>> fourSum(vector<int>& nums, int target) {
         vector<vector<int>> ans;
-        if(nums.size() == 0) return ans;
-        sort(nums.begin(), nums.end());
         int n = nums.size();
-        for(int i = 0; i < n; i++){
+        if(n == 0) return ans;
+        sort(nums.begin(), nums.end());
+        for(int i = 0; i < n-1; i++){
             for(int j = i + 1; j < n; j++){
-                int sum = target - nums[i] - nums[j];
-                int low = j + 1, high = n - 1;
-                while(low < high){
-                    int twoSum = nums[low] + nums[high];
-                    if(twoSum < sum)
-                        low++;
-                    else if(twoSum > sum)
-                        high--;
-                    else{
-                        vector<int> temp(4, 0);
-                        temp[0] = nums[i];
-                        temp[1] = nums[j];
-                        temp[2] = nums[low];
-                        temp[3] = nums[high];
+                int num = target - nums[i] - nums[j], left = j + 1, right = n - 1;
+                while(left < right){
+                    int sum = nums[left] + nums[right];
+                    if(sum == num){
+                        vector<int> temp = {nums[i], nums[j], nums[left], nums[right]};
                         ans.push_back(temp);
-                        while(low < high and nums[low] == temp[2]) low++;
-                        while(high > low and nums[high] == temp[3]) high--;
+                        while(left < right and nums[left] == temp[2]) left++;
+                        while(left < right and nums[right] == temp[3]) right--;
                     }
+                    else if(sum < num)
+                        left++;
+                    else right--;
                 }
-                while(j+1 < n and nums[j] == nums[j+1]) j++;
+                while(j + 1 < n and nums[j] == nums[j+1]) j++;
             }
             while(i+1 < n and nums[i] == nums[i+1]) i++;
         }

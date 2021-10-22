@@ -20,7 +20,7 @@ public:
         int n = nums.size();
         if(n < 3) return 0;
         sort(nums.begin(), nums.end());
-        int sum = nums[0] + nums[1] + nums[3];
+        int sum = nums[0] + nums[1] + nums[2];
         int closest = sum;
         for(int i = 0; i < n-2; i++){
             if(i > 0 && nums[i] == nums[i-1]) continue;

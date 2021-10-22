@@ -57,27 +57,23 @@
 // Sorting + 2-pointer approach
 class Solution {
 public:
-vector<vector<int>> threeSum(vector<int>& nums){
-    sort(nums.begin(), nums.end());
-    vector<vector<int>> ans;
-    int n = nums.size();
-    for(int i = 0; i < n-2; ++i){
-        if(i == 0 || (i > 0 and nums[i] != nums[i-1])){
-            int low = i+1, high = n-1, sum = 0 - nums[i];
-            while(low < high){
-                if(nums[low] + nums[high] == sum){
-                    ans.push_back({nums[low], nums[i], nums[high]});
-                    while(low < high and nums[low] == nums[low+1]) low++;
-                    while(high > low and nums[high] == nums[high-1]) high--;
-                    low++; high--;
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> ans;
+        sort(nums.begin(), nums.end());
+        for(int i = 0; i < nums.size(); i++){
+            int left = i + 1, right = nums.size() - 1, target = -nums[i];
+            while(left < right){
+                if(nums[left] + nums[right] == target){
+                    vector<int> temp = {nums[left], nums[i], nums[right]};
+                    while(left < right and nums[left] == temp[0]) left++;
+                    while(left < right and nums[right] == temp[2]) right--;
+                    ans.push_back(temp);
                 }
-                else if(nums[low] + nums[high] < sum){
-                    low++;
-                }
-                else high--;
+                else if(nums[left] + nums[right] < target) left++;
+                else right--;
             }
+            while(i < nums.size() - 1 and nums[i] == nums[i+1]) i++;
         }
+        return ans;
     }
-    return ans;
-  }
 };
