@@ -25,6 +25,8 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+
+ // Using Extra Space
 class Solution {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         ListNode start = new ListNode(0);
@@ -53,4 +55,50 @@ class Solution {
         }
         return start.next;
     }
+}
+
+// No Extra Space
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+public class Solution {
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    if(l1 == null) return l2;
+    if(l2 == null) return l1;
+    ListNode t1 = l1;
+    ListNode t2 = l2; 
+    
+    //whichever list is starting with least, make it t1;
+    if(t1.val > t2.val) {
+        ListNode temp = t1;
+        t1 = t2;
+        t2 = temp;
+    }
+    l1 = t1; //this is what you return eventually
+
+    while(t1.next!=null && t2!=null) {
+        if(t1.val <= t2.val && t1.next.val <= t2.val) {
+            t1 = t1.next; // proceed if both are less.
+        }else if (t1.val <= t2.val){
+            // if t2.val comes in b/w, connect t2, 
+            // and make t1.next as t2.
+            ListNode temp = t2;
+            t2 = t1.next;
+            t1.next = temp;
+        }
+    }
+    //If the first list reaches end, just connect to second list.
+    if(t1.next == null) {
+        t1.next = t2;
+    }
+    return l1;
+}
 }
