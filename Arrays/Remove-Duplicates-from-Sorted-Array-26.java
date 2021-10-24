@@ -35,10 +35,10 @@
 // 0 <= nums.length <= 3 * 104
 // -100 <= nums[i] <= 100
 // nums is sorted in non-decreasing order.
+
 class Solution {
-public:
-    int removeDuplicates(vector<int>& nums) {
-        int left = 0, n = nums.size();
+    public int removeDuplicates(int[] nums) {
+        int left = 0, n = nums.length;
         if(n <= 1) return n;
         for(int right = 1; right < n; right++){
             if(nums[left] != nums[right]){
@@ -48,4 +48,4 @@ public:
         }
         return left + 1;
     }
-};
+}

@@ -32,30 +32,35 @@
 // Constraints:
 // 1 <= N <= 105
 // 1 <= W <= 105
+/*
+struct Item{
+    int value;
+    int weight;
+};
+*/
+
 
 class Solution
 {
     public:
     static bool cmp(Item a, Item b){
-        return (double)a.value/(double)a.weight > (double)a.value/(double)a.weight;
+        return (double)a.value/(double)a.weight > (double)b.value/(double)b.weight;
     }
-    
     double fractionalKnapsack(int W, Item arr[], int n)
     {
-        sort(arr, arr+n, cmp);
-        double cursum = 0.0;
-        for(int i=0; i<n; i++){
+        sort(arr, arr + n, cmp);
+        double ans = 0.0, amount = 0.0;
+        for(int i = 0; i < n; i++){
             if(W >= arr[i].weight){
-                cursum += arr[i].value;
+                ans += arr[i].value;
                 W -= arr[i].weight;
             }
-            else
-            {
-                cursum += arr[i].value*((double)W/arr[i].weight);
+            else{
+                ans += arr[i].value*((double)(W)/(double) arr[i].weight);
                 break;
             }
         }
-        return cursum;
+        return ans;
     }
         
 };
