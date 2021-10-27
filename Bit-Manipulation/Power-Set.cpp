@@ -20,6 +20,32 @@
 // Constraints: 
 // 1 <= Length of string <= 16
   
+
+  // first method
+class Solution{
+	public:
+		vector<string> AllPossibleStrings(string s){
+		    vector<string> result;
+		    int n = s.size();
+		    for(int i = 1; i < (1 << n); i++){
+		        string res = "";
+		        int temp = i, j = 0;
+		        while(temp){
+		            if(temp & 1)
+		                res += s[j];
+		            j++;
+		            temp >>= 1;
+		        }
+		        if(!res.empty())
+		            result.push_back(res);
+		    }
+		    sort(result.begin(), result.end());
+		    return result;
+		}
+};
+
+// second method
+
 class Solution{
 	public:
 	    vector<string> ans;
