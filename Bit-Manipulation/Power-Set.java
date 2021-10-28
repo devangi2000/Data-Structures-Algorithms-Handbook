@@ -1,3 +1,5 @@
+// Method 1
+
 class Solution
 {
     public List<String> AllPossibleStrings(String s)
@@ -16,6 +18,28 @@ class Solution
             if(res.length() > 0)
                 result.add(res);
         }
+        Collections.sort(result);
+        return result;
+    }
+}
+
+// Method 2
+
+class Solution
+{
+    public void solve(String s, List<String> result, int idx, String curr){
+        if(idx == s.length()){
+            if(curr != "")
+                result.add(curr);
+            return;
+        }
+        solve(s, result, idx + 1, curr + s.charAt(idx));
+        solve(s, result, idx + 1, curr);
+    }
+    public List<String> AllPossibleStrings(String s)
+    {
+        List<String> result = new ArrayList<>();
+        solve(s, result, 0, "");
         Collections.sort(result);
         return result;
     }
