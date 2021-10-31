@@ -39,6 +39,57 @@ public:
     }
 };
 */
+
+// Method 2
+
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        int n = heights.size(), ans = 0;
+        vector<int> nsl(n), nsr(n);
+        stack<int> st;
+        for(int i = 0; i < n; i++){
+            while(!st.empty() and heights[i] <= heights[st.top()])
+                st.pop();
+            if(st.empty()) nsl[i] = 0;
+            else nsl[i] = st.top() + 1;
+            st.push(i);
+        }
+        while(!st.empty()) st.pop();
+        for(int i = n-1; i >= 0; i--){
+            while(!st.empty() and heights[i] <= heights[st.top()])
+                st.pop();
+            if(st.empty()) nsr[i] = n-1;
+            else nsr[i] = st.top() - 1;
+            st.push(i);
+        }
+        for(int i = 0; i < n; i++)
+            ans = max(ans, (nsr[i] - nsl[i] + 1) * heights[i]);
+        return ans;
+    }
+};
+
+// Fastest
+
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        stack<int> st;
+        int n = heights.size(), ans = 0;
+        for(int i = 0; i <= n; i++){
+            while(!st.empty() and (i == n or heights[i] <= heights[st.top()])){
+                int height = heights[st.top()];
+                st.pop();
+                int width = st.empty() ? i : i - st.top() - 1;
+                ans = max(ans, width * height);
+            }
+            st.push(i);
+        }
+        return ans;
+    }
+};
+
+
 // ADITYA VERMA'S APPROACH 🤩
 class Solution {
 public:
@@ -73,34 +124,6 @@ public:
         for(int i=0; i<heights.size(); i++)
             ans = max(ans, (nsr[i]-nsl[i]-1)*heights[i]);
         
-        return ans;
-    }
-};
-
-// OR USE THIS STACK-BASED METHOD INSTEAD; IT'S MORE OPTIMIZED THAN BRUTE FORCE TOO
-class Solution {
-public:
-    int largestRectangleArea(vector<int>& heights) {
-        stack<int> st;
-        heights.push_back(0);
-        int ans = 0, n = heights.size();
-        int i = 0;
-        while(i<n){
-            while(!st.empty() and heights[i]<heights[st.top()]){
-                int index = st.top();
-                int height = heights[index];
-                st.pop();
-                if(st.empty()){                
-                    ans = max(ans, height*i);
-                }
-                else{
-                   int width = i - st.top() - 1;
-                   ans = max(ans, height*width); 
-            }
-         }
-            st.push(i);
-            i++;
-       }
         return ans;
     }
 };
