@@ -28,7 +28,7 @@
 // -104 <= val <= 104
 // At most 104 calls will be made to add.
 // It is guaranteed that there will be at least k elements in the array when you search for the kth element.
-
+// Method 1
 class KthLargest {
 public:
     priority_queue<int, vector<int>, greater<int>> minHeap; 
@@ -56,3 +56,30 @@ public:
  * KthLargest* obj = new KthLargest(k, nums);
  * int param_1 = obj->add(val);
  */
+
+// Method 2
+
+class MedianFinder {
+public:
+    priority_queue<long> maxHeap;
+    priority_queue<long, vector<long>, greater<long>> minHeap;
+    MedianFinder() {        
+    }    
+    void addNum(int num) {
+        if(maxHeap.empty() || maxHeap.top() > num) maxHeap.push(num);
+        else minHeap.push(num);        
+        if(maxHeap.size() > minHeap.size() + 1){
+            minHeap.push(maxHeap.top());
+            maxHeap.pop();
+        }
+        else if(minHeap.size() > maxHeap.size() + 1){
+            maxHeap.push(minHeap.top());
+            minHeap.pop();
+        }
+    }
+    
+    double findMedian() {
+        if(minHeap.size() == maxHeap.size()) return maxHeap.empty() ? 0 : (maxHeap.top() + minHeap.top()) / 2.0;
+        else return maxHeap.size() > minHeap.size() ? maxHeap.top() : minHeap.top();
+    }
+};
