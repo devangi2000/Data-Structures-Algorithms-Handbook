@@ -22,24 +22,15 @@
 // 30 <= temperatures[i] <= 100
 
 class Solution {
-public:
-    vector<int> v;
-    stack<pair<int,int>> st;
-    vector<int> dailyTemperatures(vector<int>& temperatures) {
-        int n = temperatures.size();
-        for(int i=n-1; i>=0; i--){
-            if(st.empty())
-                v.push_back(0);
-            else{
-                while(!st.empty() and temperatures[i] >= st.top().first)
-                    st.pop();
-                if(st.empty()) v.push_back(0);
-                else v.push_back(st.top().second-i);
-            }
-            st.push(make_pair(temperatures[i], i));
-        }
-        reverse(v.begin(), v.end());
-        return v;
+    public int[] dailyTemperatures(int[] temps) {
+        Stack<Integer> st = new Stack<>();
+        int[] ans = new int[temps.length];
+        for(int i = temps.length - 1; i >= 0; i--){
+            while(!st.isEmpty() && temps[st.peek()] <= temps[i])
+                st.pop();
+            ans[i] = st.empty() ? 0 : st.peek() - i;
+            st.push(i);
+        }        
+        return ans;
     }
-};
-
+}

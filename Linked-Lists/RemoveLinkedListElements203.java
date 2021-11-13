@@ -28,15 +28,14 @@
  */
 class Solution {
     public ListNode removeElements(ListNode head, int val) {
-        ListNode dummy = new ListNode(-1);
-        dummy.next = head;
-        ListNode curr = head;
+        ListNode node = new ListNode(0);
+        node.next = head;
+        ListNode curr = node;
         while(curr != null){
-            if(curr.next != null && curr.next.val == val)
+            if(curr.next != null && curr.next.val==val)
                 curr.next = curr.next.next;
-            else
-                curr = curr.next;
+            else curr = curr.next;
         }
-        return dummy.next;
+        return node.next;
     }
 }
