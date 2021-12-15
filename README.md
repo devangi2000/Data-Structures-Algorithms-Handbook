@@ -1,7 +1,7 @@
 # Data-Structures-Algorithms-Handbook
 
 ### Ace that coding interview!
-A series of important questions with solutions to crack the coding interview and ace it!
+A series of 500+ questions with solutions not only to crack that coding interview, but also ace it!
 Most of the solutions are in C++ but I shall constantly update the repository with solutions in C++ as well as Java. Will try to include Brute-Better-Optimal approaches in each question too.
 
 Here's a comprehensive list of resources I used during my coding interview prep -
