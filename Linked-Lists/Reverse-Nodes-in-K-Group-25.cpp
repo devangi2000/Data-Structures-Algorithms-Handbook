@@ -68,3 +68,64 @@ public:
     }
 };
 
+
+// Method 2
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    void reverseLL(ListNode* head){
+        if(head == NULL || head->next == NULL) return;
+        ListNode *prev = NULL, *curr = head;
+        while(curr){
+            ListNode *front = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = front;
+        }
+        return;
+    }
+
+    ListNode* getKthNode(ListNode* node, int k){
+        k -= 1;
+        while(node != nullptr && k>0){
+            k--;
+            node = node->next;
+        }
+        return node;
+    }
+
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode *temp = head;
+        ListNode *prevLast = nullptr;
+        while(temp != nullptr) {
+            ListNode *kthNode = getKthNode(temp, k);
+            if(kthNode == nullptr) {
+                if(prevLast) {
+                    prevLast->next = temp;
+                }
+                break;
+            }
+            ListNode *nextNode = kthNode->next;
+            kthNode->next = nullptr;
+            reverseLL(temp);
+            if( temp == head ) {
+                head = kthNode;
+            } else {
+                prevLast->next = kthNode;
+            }
+            prevLast = temp;
+            temp = nextNode;
+        }
+        return head;
+    }
+};
