@@ -21,30 +21,35 @@
 class Solution {
 public:
     vector<int> largestDivisibleSubset(vector<int>& nums) {
-        int n = nums.size(), maxlen = 0, maxind = -1;
-        if(n == 1) return nums;
-        vector<int> dp(n), pre(n);
+        int n = nums.size(), maxi = 0, lastIndex = -1;
+        vector<int> ans;
+        vector<int> dp(n, 1);
+        vector<int> hash(n, 0);
         sort(nums.begin(), nums.end());
         for(int i = 0; i < n; i++){
-            dp[i] = 1; pre[i] = -1;
-            for(int j = i-1; j >= 0; j--){
-                if(nums[i] % nums[j] == 0){
-                    if(dp[i] < 1 + dp[j]){
-                        dp[i] = 1 + dp[j];
-                        pre[i] = j;
-                    }
+            hash[i] = i;
+            for(int j = 0; j < i; j++){
+                if(nums[i] % nums[j] == 0 && dp[i] < 1 + dp[j]){
+                    dp[i] = 1 + dp[j];
+                    hash[i] = j;
                 }
             }
-            if(dp[i] > maxlen){
-                maxlen = dp[i];
-                maxind = i;
+            maxi = max(maxi, dp[i]);
+        }
+
+        for(int i = 0; i < n; i++){
+            if(dp[i] == maxi){
+                lastIndex = i;
             }
         }
-        vector<int> res;
-        while(maxind != -1){
-            res.push_back(nums[maxind]);
-            maxind = pre[maxind];
+        ans.push_back(nums[lastIndex]);
+
+        while(lastIndex != hash[lastIndex]) {
+            lastIndex = hash[lastIndex];
+            ans.push_back(nums[lastIndex]);
         }
-        return res;
+
+        reverse(ans.begin(), ans.end());
+        return ans;
     }
 };
